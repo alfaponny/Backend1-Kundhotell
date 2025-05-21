@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 
 
 public class RoomDto {
-    long id;
+    long roomId;
+    int maxExtraBed;
 }

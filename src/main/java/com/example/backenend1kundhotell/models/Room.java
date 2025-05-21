@@ -1,8 +1,6 @@
 package com.example.backenend1kundhotell.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,9 +10,15 @@ import lombok.NoArgsConstructor;
 public class Room {
 	@Id
 	@GeneratedValue
-	private long id;
+	private long roomId;
+	int maxExtraBed;
 
-	public Room(long id) {
-		this.id = id;
+	@Enumerated(EnumType.STRING)
+	private RoomType roomType;
+
+	public Room(int maxExtraBed, RoomType roomtype) {
+
+		this.maxExtraBed = maxExtraBed;
+		this.roomType = roomtype;
 	}
 }

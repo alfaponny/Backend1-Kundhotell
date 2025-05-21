@@ -3,9 +3,10 @@ package com.example.backenend1kundhotell.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -15,15 +16,11 @@ public class Booking {
 
 	@Id
 	@GeneratedValue
-	private long id;
-	private int nights;
-	private int date; //ska det vara int?
+	private long bookingId;
+	private LocalDate startDate;
+	private LocalDate endDate;
+	private int extraBeds;
 
-	public Booking(int nights, int date) {
-		this.nights = nights;
-		this.date = date;
-
-	}
 
 	@ManyToOne
 	@JoinColumn
@@ -34,11 +31,13 @@ public class Booking {
 	@JoinColumn
 	private Room room;
 
-	public Booking(int nights, int date, Customer customer, Room room) {
-		this.nights = nights;
-		this.date = date;
-		this.customer = customer;
-		this.room = room;
+
+    public Booking(LocalDate startDate, LocalDate endDate, int extraBeds, Customer customer, Room room) {
+			this.startDate = startDate;
+			this.endDate = endDate;
+			this.extraBeds = extraBeds;
+			this.customer = customer;
+			this.room = room;
 
 	}
 }

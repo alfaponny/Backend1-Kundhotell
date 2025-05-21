@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -14,9 +13,10 @@ import java.util.Date;
 @Builder
 
 public class BookingDto {
-    long id;
-    int nights;
+    long bookingId;
     LocalDate startDate;
+    LocalDate endDate;
     long customerId;
+    int extraBed;
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public class Customer {
 	@Id
 	@GeneratedValue
-	private long id;
+	private long customerId;
 	private String firstName;
 	private String lastName;
 	private String email;
