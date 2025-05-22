@@ -17,14 +17,14 @@ public class Customer {
 	@GeneratedValue
 	private long customerId;
 	private String firstName;
-	private String lastName;
+	private String surname;
 	private String email;
 	private String phone;
 	private String booking;
 
-	public Customer(String firstName, String lastName, String email, String phone, String booking) {
+	public Customer(String firstName, String surname, String email, String phone, String booking) {
 		this.firstName = firstName;
-		this.lastName = lastName;
+		this.surname = surname;
 		this.email = email;
 		this.phone = phone;
 		this.booking =booking;

@@ -13,6 +13,7 @@ public class Room {
 	private long roomId;
 	int maxExtraBed;
 
+
 	@Enumerated(EnumType.STRING)
 	private RoomType roomType;
 
