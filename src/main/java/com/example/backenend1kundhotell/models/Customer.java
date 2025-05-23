@@ -15,15 +15,15 @@ import java.util.List;
 public class Customer {
 	@Id
 	@GeneratedValue
-	private long id;
+	private long customerId;
 	private String firstName;
-	private String lastName;
+	private String surname;
 	private String email;
 	private String phone;
 
-	public Customer(String firstName, String lastName, String email, String phone) {
+	public Customer(String firstName, String surname, String email, String phone) {
 		this.firstName = firstName;
-		this.lastName = lastName;
+		this.surname = surname;
 		this.email = email;
 		this.phone = phone;
 	}
