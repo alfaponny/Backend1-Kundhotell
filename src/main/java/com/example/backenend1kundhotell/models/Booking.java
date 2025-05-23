@@ -27,7 +27,6 @@ public class Booking {
 
 	@ManyToOne
 	@JoinColumn
-	@JsonIgnore
 	private Customer customer;
 
 	@ManyToOne

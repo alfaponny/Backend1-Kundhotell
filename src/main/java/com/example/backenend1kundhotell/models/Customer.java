@@ -20,15 +20,13 @@ public class Customer {
 	private String lastName;
 	private String email;
 	private String phone;
-	private String booking;
 
-	public Customer(String firstName, String lastName, String email, String phone, String booking) {
+	public Customer(String firstName, String lastName, String email, String phone) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phone = phone;
-		this.booking =booking;
 	}
-	@OneToMany(mappedBy = "booking")//bi-directional mapping.
+	@OneToMany(mappedBy = "customers")//bi-directional mapping. //ändrat från bookings to customers
 	private List<Booking> bookings;
 }
