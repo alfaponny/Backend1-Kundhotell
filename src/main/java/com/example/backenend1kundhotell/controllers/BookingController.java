@@ -3,9 +3,9 @@ package com.example.backenend1kundhotell.controllers;
 import com.example.backenend1kundhotell.repos.BookingRepo;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.repos.RoomRepo;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 public class BookingController {
 	private final BookingRepo bookingRepo;
 	private final CustomerRepo customerRepo;

@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class BookingServiceImpl {
+public class BookingServiceImpl implements BookingService {
 
 
         @Override
         public BookingDto bookingToBookingDto(Booking b) {
-            return BookingDto.builder().bookingId(b.getBookingId()).startDate(b.getStartDate()).endDate(b.getEndDate()).extraBed(b.getExtraBeds()).build();
+            return BookingDto.builder().id(b.getId()).startDate(b.getStartDate())
+                    .endDate(b.getEndDate()).extraBed(b.getExtraBed()).build();
         }
 
 
