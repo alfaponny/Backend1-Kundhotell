@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h2 th:text="${title}"></h2>
+<div class="allCustomers" th:unless="${#lists.isEmpty(allCustomers)}">
+  <table>
+    <th th:text="${name}"></th>
+    <tbody>
+      <tr th:each="customer : ${allCustomers}">
+        <td th:text="${customer.firstName}+' '+${customer.surname}"></td><br>
+        <br>
+        <td th:text="${customer.email}"></td><br>
+        <br>
+        <td th:text="${customer.phone}"></td>
+        <!--<td><a th:href="@{/order/deleteById/{id}(id=${customer.id})}">Delete</a></td>
+        <td><a th:href="@{/order/updateById/{id}(id=${customer.id})}">Update</a></td>-->
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p></p>
+<form action="#" th:action="@{/customers/add}" method="post">
+  <label for="firstName"> Firstname:</label><br>
+  <input type="text" id="firstName" name="firstName" value=""><br><br>
+  <label for="surname"> Surname:</label><br>
+  <input type="text" id="surname" name="surname" value=""><br><br>
+  <label for="email"> E-mail:</label><br>
+  <input type="text" id="email" name="email" value=""><br><br>
+  <label for="phone"> Phone number:</label><br>
+  <input type="text" id="phone" name="phone" value=""><br><br>
+  <input type="submit" value="Submit"></input>
+</form>
+
+</body>
+</html>

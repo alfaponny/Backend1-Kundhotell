@@ -27,6 +27,6 @@ public class Customer {
 		this.email = email;
 		this.phone = phone;
 	}
-	@OneToMany(mappedBy = "customers")//bi-directional mapping. //ändrat från bookings to customers
+	@OneToMany(mappedBy = "customer")//bi-directional mapping. //ändrat från bookings to customers
 	private List<Booking> bookings;
 }

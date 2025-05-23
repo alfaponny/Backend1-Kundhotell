@@ -24,15 +24,15 @@ repositories {
 }
 
 dependencies {
-    implementation("com.mysql:mysql-connector-j:8.0.33")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.4.5")
-
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("com.mysql:mysql-connector-j")
     annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
