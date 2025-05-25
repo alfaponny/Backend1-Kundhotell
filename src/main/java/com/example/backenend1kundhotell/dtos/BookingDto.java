@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 
 public class BookingDto {
-    long id;
+    long bookingId;
     LocalDate startDate;
     LocalDate endDate;
     long customerId;
