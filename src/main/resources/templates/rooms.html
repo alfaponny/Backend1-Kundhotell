@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms</title>
+</head>
+<body>
+
+<h2 th:text="${title}"></h2>
+<div class="allRooms" th:unless="${#lists.isEmpty(allRooms)}">
+    <table>
+        <th th:text="${name}"></th>
+        <tbody>
+        <tr th:each="room : ${allRooms}">
+            <td th:text="${room.maxExtraBed}+' '+${room.roomType}"></td><br>
+            <!--Lägga till lediga/bokade datum? -->
+            <!--<td><a th:href="@{/rooms/deleteById/{id}(id=${room.id})}">Delete</a></td>-->
+            <td><a th:href="@{/rooms/updateById/{id}(id=${room.id})}">Update</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<p></p>
+<form action="#" th:action="@{/rooms/add}" method="post">
+    <label for="maxExtraBed"> Max amount of extra beds:</label><br>
+    <input type="text" id="maxExtraBed" name="maxExtraBed" value=""><br><br>
+    <label for="roomType"> Room type:</label><br>
+    <input type="text" id="roomType" name="roomType" value=""><br><br>
+    <input type="submit" value="Submit"></input>
+</form>
+
+
+</body>
+</html>

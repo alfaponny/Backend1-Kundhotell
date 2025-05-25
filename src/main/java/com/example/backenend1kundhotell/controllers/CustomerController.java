@@ -2,14 +2,12 @@ package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.CustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
-import com.example.backenend1kundhotell.repos.BookingRepo;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,6 +48,7 @@ public class CustomerController {
 	@RequestMapping("/updateById/{id}")
 	public String updateCustomerByID(@PathVariable long id, Model model) {
 		Customer c = customerRepo.findById(id).get();
+		//Kunden som hittas skickas vidare till uppdaterings formulär sidan
 		model.addAttribute("customer", c);
 		return "updateCustomer.html";
 	}
@@ -58,12 +57,11 @@ public class CustomerController {
 	public String updateCustomer(@RequestParam String firstName, @RequestParam String surname,
 							  @RequestParam String email, @RequestParam String phone,
 								 @RequestParam long id, Model model) {
+		//Metoden updateById() anropas, där kunden kan hittas, och uppdateras
 		customerService.updateById(id, firstName, surname, email, phone);
+		//Lägga till felmeddelande när kunden inte hittades, eller ändringar inte kunde genomföras
 		return "redirect:/customers/all";
 	}
-
-
-
 
 	//se kunder, lägga till kunder, ta bort kunder
 }

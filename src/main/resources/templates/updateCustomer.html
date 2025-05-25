@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Update customer</title>
 </head>
 <body>
 
+
+<!--Formulär för att uppdatera en kund  -->
 <form action="#" th:action="@{/customers/update}" th:object="${customer}" method="post">
     <label for="firstName"> Firstname:</label><br>
     <input type="text" id="firstName" th:field="*{firstName}"><br><br>

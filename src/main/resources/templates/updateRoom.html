@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update room</title>
+</head>
+<body>
+
+<!--Formulär för att uppdatera ett rum  -->
+<form action="#" th:action="@{/rooms/update}" th:object="${room}" method="post">
+  <label for="maxExtraBed"> Firstname:</label><br>
+  <input type="text" id="maxExtraBed" th:field="*{maxExtraBed}"><br><br>
+  <label for="roomType"> Surname:</label><br>
+  <!-- Använda knappar istället? För att begränsa val-->
+  <input type="text" id="roomType" th:field="*{roomType}"><br><br>
+  <input type="hidden" id="id" th:field="*{id}"><br><br>
+  <input type="submit" value="Submit"></input>
+</form>
+
+</body>
+</html>
