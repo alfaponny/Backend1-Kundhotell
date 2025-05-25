@@ -14,7 +14,7 @@
         <tr th:each="room : ${allRooms}">
             <td th:text="${room.maxExtraBed}+' '+${room.roomType}"></td><br>
             <!--Lägga till lediga/bokade datum? -->
-            <!--<td><a th:href="@{/rooms/deleteById/{id}(id=${room.id})}">Delete</a></td>-->
+            <!--<td><a th:href="@{/rooms/deleteById/{bookingId}(bookingId=${room.bookingId})}">Delete</a></td>-->
             <td><a th:href="@{/rooms/updateById/{id}(id=${room.id})}">Update</a></td>
 
         </tr>
