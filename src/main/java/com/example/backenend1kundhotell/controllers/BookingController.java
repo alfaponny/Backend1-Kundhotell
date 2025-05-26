@@ -43,7 +43,7 @@ public class BookingController {
 
 	@RequestMapping("/deleteById/{id}")
 	public String deleteBookingByID(@PathVariable long id) {
-		bookingService.deleteById();
+		bookingService.deleteById(id);
 		return "redirect:/bookings/all";
 	}
 
