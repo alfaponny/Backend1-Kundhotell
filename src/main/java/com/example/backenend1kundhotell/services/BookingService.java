@@ -15,12 +15,8 @@ public interface BookingService {
 
     public BookingDto bookingToBookingDto (Booking b);
 
+           Booking bookingDtoToBooking (BookingDto b);
     public MiniBookingDto bookingToMiniBookingDto (Booking b);
-
-
-
-
-
 
 
     public List<BookingDto> getAllBookings();
