@@ -15,5 +15,6 @@ public interface CustomerService {
 
     public List<CustomerDto> getAllCustomers();
 
-    public  void addCustomer(String firstName, String surname, String email, String phone);
+    public  void addCustomer(Customer customer);
+    void updateCustomer(Customer customer);
 }

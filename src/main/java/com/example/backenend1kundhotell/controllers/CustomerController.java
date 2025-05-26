@@ -4,12 +4,12 @@ import com.example.backenend1kundhotell.dtos.CustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.services.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,14 +31,30 @@ public class CustomerController {
 		model.addAttribute("allCustomers", customers);
 		model.addAttribute("title", "Customers");
 		model.addAttribute("name", "Customer details");
+		model.addAttribute("customer", new CustomerDto());
 		return "customers";
 	}
 
 	@RequestMapping("/add")
-	public String addCustomer(@RequestParam String firstName, @RequestParam String surname,
-							  @RequestParam String email, @RequestParam String phone,
+	public String addCustomer(@ModelAttribute @Valid Customer customer,
+							  BindingResult result,
 							  Model model) {
-		customerService.addCustomer(firstName, surname, email, phone);
+		if(result.hasErrors()) {
+			model.addAttribute("allCustomers", customerService.getAllCustomers());
+			model.addAttribute("title", "Customers");
+			model.addAttribute("name", "Customer details");
+			return "customers";
+		}
+		customerService.addCustomer(customer);
+		return "redirect:/customers/all";
+	}
+	@PostMapping("/update")
+	public String updateCustomer(@ModelAttribute("customer") @Valid Customer customer,
+								 BindingResult result) {
+		if(result.hasErrors()) {
+			return "updateCustomer";
+		}
+		customerService.updateCustomer(customer);
 		return "redirect:/customers/all";
 	}
 
