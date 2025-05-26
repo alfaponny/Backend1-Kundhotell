@@ -16,8 +16,9 @@ public class BookingDto {
     long bookingId;
     LocalDate startDate;
     LocalDate endDate;
-    long customerId;
     int extraBed;
+    MiniCustomerDto miniCustomer;
+    MiniRoomDto miniRoom;
 
 
 }

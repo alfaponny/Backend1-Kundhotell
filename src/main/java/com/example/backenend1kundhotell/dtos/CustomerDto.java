@@ -19,5 +19,6 @@ public class CustomerDto {
     String surname;
     String email;
     String phone;
+    MiniBookingDto miniBookingDto;
 
 }
