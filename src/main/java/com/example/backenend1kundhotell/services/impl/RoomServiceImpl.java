@@ -56,8 +56,8 @@ public class RoomServiceImpl implements RoomService {
         roomRepo.save(room);
     }
     @Override
-    public void deleteRoomById(long id){
-        roomRepo.deleteById(id);
+    public void deleteRoomById(long roomId){
+        roomRepo.deleteById(roomId);
     }
 }
 

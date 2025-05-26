@@ -41,13 +41,13 @@ public class CustomerController {
 
 	@RequestMapping("/deleteById/{id}")
 	public String deleteCustomerByID(@PathVariable long id) {
-		customerService.deleteById();
+		customerService.deleteById(id);
 		return "redirect:/customers/all";
 	}
 
 	@RequestMapping("/updateById/{id}")
 	public String updateCustomerByID(@PathVariable long id, Model model) {
-		Customer c = customerRepo.findById(id).get();
+		Customer c = customerService.findById(id);
 		//Kunden som hittas skickas vidare till uppdaterings formulär sidan
 		model.addAttribute("customer", c);
 		return "updateCustomer.html";
