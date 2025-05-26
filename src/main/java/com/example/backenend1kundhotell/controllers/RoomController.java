@@ -46,19 +46,4 @@ public class RoomController {
             return "redirect:/rooms/all";
         }
 
-        @RequestMapping("/updateById/{id}")
-        public String updateRoomByID(@PathVariable long id, Model model) {
-            Room r = roomRepo.findById(id).get();
-            model.addAttribute("room", r);
-            return "updateRoom.html";
-        }
-
-        @RequestMapping("/update")
-        public String updateRoom(@RequestParam int maxExtraBed, @RequestParam String roomType,
-                                     @RequestParam long id, Model model) {
-            //roomType skickas som en sträng, för att omvandlas till enum i roomservice
-            roomService.updateById(id, maxExtraBed, roomType);
-            return "redirect:/rooms/all";
-        }
-
 }
