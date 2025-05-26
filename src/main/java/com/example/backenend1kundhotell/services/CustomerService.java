@@ -23,4 +23,5 @@ public interface CustomerService {
     public  void addCustomer(Customer customer);//tar emot Customer-objekt direkt
 
     void updateCustomer(Customer customer);
+
 }
