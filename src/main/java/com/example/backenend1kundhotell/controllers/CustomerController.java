@@ -4,12 +4,12 @@ import com.example.backenend1kundhotell.dtos.CustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.services.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class CustomerController {
 		model.addAttribute("allCustomers", customers);
 		model.addAttribute("title", "Customers");
 		model.addAttribute("name", "Customer details");
+		model.addAttribute("customer", new CustomerDto());
 		return "customers";
 	}
 
@@ -42,8 +43,26 @@ public class CustomerController {
 	@RequestMapping("/add")
 	public String addCustomer(@RequestParam String firstName, @RequestParam String surname,
 							  @RequestParam String email, @RequestParam String phone,
+	@RequestMapping("/add") //valid aktiverar JPA/Bean
+	public String addCustomer(@ModelAttribute @Valid Customer customer, //BindingResult fångar valideringfel
+							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
-		customerService.addCustomer(firstName, surname, email, phone);
+		if(result.hasErrors()) {
+			model.addAttribute("allCustomers", customerService.getAllCustomers());
+			model.addAttribute("title", "Customers");
+			model.addAttribute("name", "Customer details");
+			return "customers";
+		}
+		customerService.addCustomer(customer);
+		return "redirect:/customers/all";
+	}
+	@PostMapping("/update")
+	public String updateCustomer(@ModelAttribute("customer") @Valid Customer customer,
+								 BindingResult result) {
+		if(result.hasErrors()) {
+			return "updateCustomer";
+		}
+		customerService.updateCustomer(customer);
 		return "redirect:/customers/all";
 	}
 
@@ -72,5 +91,5 @@ public class CustomerController {
 		return "redirect:/customers/all";
 	}
 
-	//se kunder, lägga till kunder, ta bort kunder*/
+	//se kunder, lägga till kunder, ta bort kunder
 }
