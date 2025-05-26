@@ -34,6 +34,11 @@ public class CustomerController {
 		return "customers";
 	}
 
+	@RequestMapping("/addCustomer")
+	public String addNewCustomer() {
+		return "addCustomer.html";
+	}
+
 	@RequestMapping("/add")
 	public String addCustomer(@RequestParam String firstName, @RequestParam String surname,
 							  @RequestParam String email, @RequestParam String phone,
@@ -42,7 +47,7 @@ public class CustomerController {
 		return "redirect:/customers/all";
 	}
 
-	@RequestMapping("/deleteById/{id}")
+	/*@RequestMapping("/deleteById/{id}")
 	public String deleteCustomerByID(@PathVariable long id) {
 		//I den metoden behöver man kolla om kunden har aktiva bokningar
 		customerService.deleteById();
@@ -67,5 +72,5 @@ public class CustomerController {
 		return "redirect:/customers/all";
 	}
 
-	//se kunder, lägga till kunder, ta bort kunder
+	//se kunder, lägga till kunder, ta bort kunder*/
 }

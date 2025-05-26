@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update booking</title>
+</head>
+<body>
+
+<!--Formulär för att uppdatera ett rum  -->
+<form action="#" th:action="@{/bookings/update}" th:object="${booking}" method="post">
+    <label for="startDate"> Start Date:</label><br>
+    <input type="text" id="startDate" th:field="*{startDate}"><br><br>
+    <label for="endDate"> End date:</label><br>
+    <input type="text" id="endDate" th:field="*{endDate}"><br><br>
+    <label for="customerId"> Customer Id:</label><br>
+    <input type="text" id="customerId" th:field="*{customerId}"><br><br>
+    <label for="extraBed"> Surname:</label><br>
+    <input type="text" id="extraBed" th:field="*{extraBed}"><br><br>
+    <input type="hidden" id="id" th:field="*{id}"><br><br>
+    <input type="submit" value="Submit"></input>
+</form>
+
+
+</body>
+</html>
