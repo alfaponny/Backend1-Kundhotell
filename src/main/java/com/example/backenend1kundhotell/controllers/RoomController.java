@@ -2,7 +2,6 @@ package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.RoomDto;
 import com.example.backenend1kundhotell.models.Room;
-import com.example.backenend1kundhotell.models.RoomType;
 import com.example.backenend1kundhotell.repos.RoomRepo;
 import com.example.backenend1kundhotell.services.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class RoomController {
         private final RoomService roomService;
         private final RoomRepo roomRepo;
 
-        @RequestMapping("/all")
+        /*@RequestMapping("/all")
         public String getAllRooms(Model model) {
             List<RoomDto> customers = roomService.getAllRooms();
             model.addAttribute("allRooms", customers);
@@ -59,6 +58,6 @@ public class RoomController {
             //roomType skickas som en sträng, för att omvandlas till enum i roomservice
             roomService.updateById(id, maxExtraBed, roomType);
             return "redirect:/rooms/all";
-        }
+        }*/
 
 }

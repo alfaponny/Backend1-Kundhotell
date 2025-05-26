@@ -19,4 +19,5 @@ public class BookingDto {
     long customerId;
     int extraBed;
 
+
 }
