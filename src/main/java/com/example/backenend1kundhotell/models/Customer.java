@@ -23,23 +23,11 @@ import java.util.List;
 public class Customer {
 	@Id
 	@GeneratedValue
-	private long customerId;
-
-	@NotBlank(message = "Firstname cannot be empty")
-	@Size(min = 2, max = 50)
-	private String firstName;
-
-	@NotBlank(message = "Surname cannot be empty")
-	@Size(min = 2, max = 50)
-	private String surname;
-
-	@Email(message = "Email must be valid")
-	@NotBlank(message = "E-mail annot be blank")
-	private String email;
-
-	@NotBlank (message = "Phone number needed")
-	@Pattern(regexp = "\\d{7,15}", message = "Phone number must be between 7 and 15 digits")
-	private String phone;
+	long customerId;
+	String firstName;
+	String surname;
+	String email;
+	String phone;
 
 	public Customer(String firstName, String surname, String email, String phone) {
 		this.firstName = firstName;

@@ -55,10 +55,10 @@ public class CustomerController {
 		customerService.addCustomer(customerDto);
 		return "redirect:/customers/all";
 	}
-	private Customer convertToEntity(CustomerDto customerDto) {
+	/*private Customer convertToEntity(CustomerDto customerDto) {
 		return new Customer(customerDto.getFirstName(), customerDto.getSurname(),
 				customerDto.getGetEmail(), customerDto.getPhone());
-	}
+	}*/
 
 	@RequestMapping("/deleteById/{id}")
 	public String deleteCustomerByID(@PathVariable long id) {
