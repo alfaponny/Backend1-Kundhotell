@@ -12,6 +12,8 @@ public interface CustomerService {
 
     public MiniCustomerDto customerToMiniCustomerDto (Customer c);
 
+    public Customer customerDtoToCustomer(CustomerDto c);
+
     public List<CustomerDto> getAllCustomers();
 
     public void deleteById(long id);
@@ -20,7 +22,7 @@ public interface CustomerService {
 
     public void updateById(long id, String firstName, String surname, String email, String phone);
 
-    public  void addCustomer(Customer customer);//tar emot Customer-objekt direkt
+    public  void addCustomer(CustomerDto customer);//tar emot Customer-objekt direkt
 
     void updateCustomer(Customer customer);
 }

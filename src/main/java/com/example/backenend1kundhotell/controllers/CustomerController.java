@@ -35,31 +35,38 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/addCustomer")
-	public String addNewCustomer() {
-		return "addCustomer.html";
+	public String addNewCustomer(Model model) {
+		model.addAttribute("customer", new CustomerDto());
+		return "addCustomer";
 	}
 
 	@RequestMapping("/add")
-	public String addCustomer(@ModelAttribute @Valid Customer customer, //BindingResult fångar valideringfel
+	public String addCustomer(@ModelAttribute @Valid CustomerDto customerDto, //BindingResult fångar valideringfel
 							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
-		model.addAttribute("customer", new CustomerDto());
+		//model.addAttribute("customer", new CustomerDto());
 		if(result.hasErrors()) {
 			model.addAttribute("allCustomers", customerService.getAllCustomers());
 			model.addAttribute("title", "Customers");
 			model.addAttribute("name", "Customer details");
-			return "customers";
+			return "addCustomer";
 		}
-		customerService.addCustomer(customer);
+		//Customer customer = convertToEntity(customerDto);
+		customerService.addCustomer(customerDto);
 		return "redirect:/customers/all";
+	}
+	private Customer convertToEntity(CustomerDto customerDto) {
+		return new Customer(customerDto.getFirstName(), customerDto.getSurname(),
+				customerDto.getGetEmail(), customerDto.getPhone());
 	}
 
 	@PostMapping("/update")
-	public String updateCustomer(@ModelAttribute("customer") @Valid Customer customer,
+	public String updateCustomer(@ModelAttribute("customer") @Valid CustomerDto customerDto,
 								 BindingResult result) {
 		if(result.hasErrors()) {
 			return "updateCustomer";
 		}
+		Customer customer = convertToEntity(customerDto);
 		customerService.updateCustomer(customer);
 		return "redirect:/customers/all";
 	}
@@ -79,7 +86,7 @@ public class CustomerController {
 		return "updateCustomer.html";
 	}
 
-	@RequestMapping("/update")
+	@RequestMapping("/updateByParams")
 	public String updateCustomer(@RequestParam String firstName, @RequestParam String surname,
 							  @RequestParam String email, @RequestParam String phone,
 								 @RequestParam long id, Model model) {
