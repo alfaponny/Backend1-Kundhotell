@@ -35,9 +35,9 @@ public class CustomerController {
 		return "customers";
 	}
 
-	@RequestMapping("/add")
-	public String addCustomer(@ModelAttribute @Valid Customer customer,
-							  BindingResult result,
+	@RequestMapping("/add") //valid aktiverar JPA/Bean
+	public String addCustomer(@ModelAttribute @Valid Customer customer, //BindingResult fångar valideringfel
+							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
 		if(result.hasErrors()) {
 			model.addAttribute("allCustomers", customerService.getAllCustomers());

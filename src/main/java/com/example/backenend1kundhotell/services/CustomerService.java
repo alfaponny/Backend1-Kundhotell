@@ -15,6 +15,7 @@ public interface CustomerService {
 
     public List<CustomerDto> getAllCustomers();
 
-    public  void addCustomer(Customer customer);
+    public  void addCustomer(Customer customer);//tar emot Customer-objekt direkt
+
     void updateCustomer(Customer customer);
 }
