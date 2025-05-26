@@ -31,7 +31,6 @@ public class CustomerController {
 		model.addAttribute("allCustomers", customers);
 		model.addAttribute("title", "Customers");
 		model.addAttribute("name", "Customer details");
-		model.addAttribute("customer", new CustomerDto());
 		return "customers";
 	}
 
@@ -41,12 +40,10 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/add")
-	public String addCustomer(@RequestParam String firstName, @RequestParam String surname,
-							  @RequestParam String email, @RequestParam String phone,
-	@RequestMapping("/add") //valid aktiverar JPA/Bean
 	public String addCustomer(@ModelAttribute @Valid Customer customer, //BindingResult fångar valideringfel
 							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
+		model.addAttribute("customer", new CustomerDto());
 		if(result.hasErrors()) {
 			model.addAttribute("allCustomers", customerService.getAllCustomers());
 			model.addAttribute("title", "Customers");
@@ -56,6 +53,7 @@ public class CustomerController {
 		customerService.addCustomer(customer);
 		return "redirect:/customers/all";
 	}
+
 	@PostMapping("/update")
 	public String updateCustomer(@ModelAttribute("customer") @Valid Customer customer,
 								 BindingResult result) {
