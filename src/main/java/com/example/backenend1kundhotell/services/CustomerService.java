@@ -5,6 +5,7 @@ import com.example.backenend1kundhotell.dtos.MiniCustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CustomerService {
@@ -16,4 +17,11 @@ public interface CustomerService {
     public List<CustomerDto> getAllCustomers();
 
     public  void addCustomer(String firstName, String surname, String email, String phone);
+
+    public void deleteById(long id);
+
+   public Customer findById(long id);
+
+    public void updateById(long id, String firstName, String surname, String email, String phone);
+
 }

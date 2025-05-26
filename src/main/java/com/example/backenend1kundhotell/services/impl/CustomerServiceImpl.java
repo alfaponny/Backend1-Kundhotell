@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +42,27 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void addCustomer(String firstName, String surname, String email, String phone){
         customerRepo.save(new Customer(firstName, surname, email, phone));
+    }
+    @Override
+    public void deleteById(long id){
+        customerRepo.deleteById(id);
+    }
+
+    @Override
+    public Customer findById(long id) {
+        return null;
+    }
+
+    @Override
+    public void updateById (long id, String firstName, String surname, String email, String phone){
+        Customer customer = customerRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
+
+        customer.setFirstName(firstName);
+        customer.setSurname(surname);
+        customer.setEmail(email);
+        customer.setPhone(phone);
+
+        customerRepo.save(customer);
     }
 }
