@@ -60,17 +60,6 @@ public class CustomerController {
 				customerDto.getGetEmail(), customerDto.getPhone());
 	}
 
-	@PostMapping("/update")
-	public String updateCustomer(@ModelAttribute("customer") @Valid CustomerDto customerDto,
-								 BindingResult result) {
-		if(result.hasErrors()) {
-			return "updateCustomer";
-		}
-		Customer customer = convertToEntity(customerDto);
-		customerService.updateCustomer(customer);
-		return "redirect:/customers/all";
-	}
-
 	@RequestMapping("/deleteById/{id}")
 	public String deleteCustomerByID(@PathVariable long id) {
 		//I den metoden behöver man kolla om kunden har aktiva bokningar
@@ -86,15 +75,15 @@ public class CustomerController {
 		return "updateCustomer.html";
 	}
 
-	@RequestMapping("/updateByParams")
-	public String updateCustomer(@RequestParam String firstName, @RequestParam String surname,
-							  @RequestParam String email, @RequestParam String phone,
-								 @RequestParam long id, Model model) {
-		//Metoden updateById() anropas, där kunden kan hittas, och uppdateras
-		customerService.updateById(id, firstName, surname, email, phone);
-		//Lägga till felmeddelande när kunden inte hittades, eller ändringar inte kunde genomföras
+	@PostMapping("/update")
+	public String updateCustomer(@ModelAttribute("customer") @Valid CustomerDto customerDto,
+								 BindingResult result) {
+		if(result.hasErrors()) {
+			return "updateCustomer";
+		}
+		//Customer customer = convertToEntity(customerDto);
+		customerService.updateCustomer(customerDto);
 		return "redirect:/customers/all";
 	}
 
-	//se kunder, lägga till kunder, ta bort kunder
 }

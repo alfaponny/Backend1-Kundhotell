@@ -54,7 +54,8 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepo.save(customer);
     }
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(CustomerDto customerDto) {
+        Customer customer = customerDtoToCustomer(customerDto);
         customerRepo.save(customer);
     }
     @Override

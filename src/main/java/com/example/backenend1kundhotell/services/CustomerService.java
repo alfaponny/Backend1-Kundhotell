@@ -22,7 +22,7 @@ public interface CustomerService {
 
     public void updateById(long id, String firstName, String surname, String email, String phone);
 
-    public  void addCustomer(CustomerDto customer);//tar emot Customer-objekt direkt
+    public  void addCustomer(CustomerDto customerDto);//tar emot Customer-objekt direkt
 
-    void updateCustomer(Customer customer);
+    void updateCustomer(CustomerDto customerDto);
 }
