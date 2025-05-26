@@ -16,7 +16,7 @@
         <td th:text="${customer.email}"></td><br>
         <br>
         <td th:text="${customer.phone}"></td>
-        <!--<td><a th:href="@{/customers/deleteById/{id}(id=${customer.id})}">Delete</a></td>-->
+        <!--<td><a th:href="@{/customers/deleteById/{bookingId}(bookingId=${customer.bookingId})}">Delete</a></td>-->
         <td><a th:href="@{/customers/updateById/{id}(id=${customer.id})}">Update</a></td>
 
       </tr>

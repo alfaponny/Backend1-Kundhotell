@@ -1,9 +1,7 @@
 package com.example.backenend1kundhotell.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +14,7 @@ public class Booking {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private long bookingId;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	long customerId;

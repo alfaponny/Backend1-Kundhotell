@@ -5,18 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class BookingDto {
+public class MiniBookingDto {
     long bookingId;
-    LocalDate startDate;
-    LocalDate endDate;
-    long customerId;
-    int extraBed;
-
 }

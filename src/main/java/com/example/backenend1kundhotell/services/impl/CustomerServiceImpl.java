@@ -1,6 +1,7 @@
 package com.example.backenend1kundhotell.services.impl;
 
 import com.example.backenend1kundhotell.dtos.CustomerDto;
+import com.example.backenend1kundhotell.dtos.MiniCustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.services.CustomerService;
@@ -21,6 +22,13 @@ public class CustomerServiceImpl implements CustomerService {
         return CustomerDto.builder().customerId(c.getCustomerId())
                 .email(c.getEmail())
                 .phone(c.getPhone())
+                .firstName(c.getFirstName())
+                .surname(c.getSurname()).build();
+    }
+
+    @Override
+    public MiniCustomerDto customerToMiniCustomerDto(Customer c){
+        return MiniCustomerDto.builder().customerId(c.getCustomerId())
                 .firstName(c.getFirstName())
                 .surname(c.getSurname()).build();
     }
