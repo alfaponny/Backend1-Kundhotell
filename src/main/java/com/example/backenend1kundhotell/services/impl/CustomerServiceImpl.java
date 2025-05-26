@@ -42,4 +42,5 @@ public class CustomerServiceImpl implements CustomerService {
     public void addCustomer(String firstName, String surname, String email, String phone){
         customerRepo.save(new Customer(firstName, surname, email, phone));
     }
+
 }

@@ -42,7 +42,7 @@ public class RoomController {
 
         @RequestMapping("/deleteById/{id}")
         public String deleteRoomByID(@PathVariable long id) {
-            roomRepo.deleteById(id);
+            roomService.deleteRoomById(id);
             return "redirect:/rooms/all";
         }
 
