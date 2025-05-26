@@ -22,6 +22,9 @@ public class CustomerController {
 	private final CustomerService customerService;
 	private final CustomerRepo customerRepo;
 
+	//Skapa en metod findById() eller findByEmail()?
+
+
 	@RequestMapping("/all")
 	public String getAllCustomers(Model model) {
 		List<CustomerDto> customers = customerService.getAllCustomers();
@@ -29,6 +32,11 @@ public class CustomerController {
 		model.addAttribute("title", "Customers");
 		model.addAttribute("name", "Customer details");
 		return "customers";
+	}
+
+	@RequestMapping("/addCustomer")
+	public String addNewCustomer() {
+		return "addCustomer.html";
 	}
 
 	@RequestMapping("/add")
@@ -39,8 +47,9 @@ public class CustomerController {
 		return "redirect:/customers/all";
 	}
 
-	@RequestMapping("/deleteById/{id}")
+	/*@RequestMapping("/deleteById/{id}")
 	public String deleteCustomerByID(@PathVariable long id) {
+		//I den metoden behöver man kolla om kunden har aktiva bokningar
 		customerService.deleteById(id);
 		return "redirect:/customers/all";
 	}
@@ -63,5 +72,5 @@ public class CustomerController {
 		return "redirect:/customers/all";
 	}
 
-	//se kunder, lägga till kunder, ta bort kunder
+	//se kunder, lägga till kunder, ta bort kunder*/
 }

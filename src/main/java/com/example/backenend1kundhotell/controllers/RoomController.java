@@ -2,7 +2,6 @@ package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.RoomDto;
 import com.example.backenend1kundhotell.models.Room;
-import com.example.backenend1kundhotell.models.RoomType;
 import com.example.backenend1kundhotell.repos.RoomRepo;
 import com.example.backenend1kundhotell.services.RoomService;
 import lombok.RequiredArgsConstructor;
