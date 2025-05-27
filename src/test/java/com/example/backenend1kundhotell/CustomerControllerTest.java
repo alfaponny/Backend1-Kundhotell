@@ -1,6 +1,10 @@
 package com.example.backenend1kundhotell;
 
 import com.example.backenend1kundhotell.controllers.CustomerController;
+import com.example.backenend1kundhotell.models.Customer;
+import com.example.backenend1kundhotell.repos.BookingRepo;
+import com.example.backenend1kundhotell.repos.CustomerRepo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,6 +51,22 @@ public class CustomerControllerTest {
 
 	@Autowired
 	private CustomerController customerController;
+
+	@Autowired
+	private CustomerRepo customerRepo;
+
+	@Autowired
+	private BookingRepo bookingRepo;
+
+	@BeforeEach
+	public void setup(){
+		customerRepo.deleteAll();
+		customerRepo.save(new Customer("John", "Doe", "john@doe.com", "070456743"));
+
+	}
+	public void getAllCustomers() throws Exception {
+
+	}
 
 	@Test
 	public void contextLoads() throws Exception{
