@@ -1,8 +1,6 @@
 package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.CustomerDto;
-import com.example.backenend1kundhotell.models.Customer;
-import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.services.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +19,6 @@ import java.util.List;
 public class CustomerController {
 
 	private final CustomerService customerService;
-	private final CustomerRepo customerRepo;
-
-	//Skapa en metod findById() eller findByEmail()?
 
 
 	@RequestMapping("/all")

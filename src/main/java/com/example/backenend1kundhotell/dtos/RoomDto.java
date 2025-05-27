@@ -21,10 +21,10 @@ import java.util.List;
 
 public class RoomDto {
 
-    long roomId;
-    int maxExtraBed;
+    private long roomId;
+    private int maxExtraBed;
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
-    List<MiniBookingDto> miniBookingDto;
+    private List<MiniBookingDto> miniBookingDto;
 
 }

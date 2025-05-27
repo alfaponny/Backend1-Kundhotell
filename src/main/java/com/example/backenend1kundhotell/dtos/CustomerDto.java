@@ -12,6 +12,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Data
 @AllArgsConstructor
@@ -39,7 +41,7 @@ public class CustomerDto {
     private String phone;
 
 
-    MiniBookingDto miniBookingDto;
+    private List<MiniBookingDto> miniBookingDto;
 
     CustomerDto(String firstName, String surname, String email, String phone) {
         this.firstName = firstName;

@@ -19,9 +19,9 @@ public class Booking {
 	@Id
 	@GeneratedValue
 	private long id;
-
 	private LocalDate startDate;
 	private LocalDate endDate;
+	long customerId;
 	int extraBed;
 
 	public Booking(LocalDate startDate, LocalDate endDate, int extraBed) {
