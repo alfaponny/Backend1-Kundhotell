@@ -3,6 +3,7 @@ package com.example.backenend1kundhotell.services.impl;
 import com.example.backenend1kundhotell.dtos.BookingDto;
 import com.example.backenend1kundhotell.dtos.CustomerDto;
 import com.example.backenend1kundhotell.dtos.MiniBookingDto;
+import com.example.backenend1kundhotell.dtos.RoomDto;
 import com.example.backenend1kundhotell.models.Booking;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.models.Room;
@@ -12,6 +13,8 @@ import com.example.backenend1kundhotell.repos.RoomRepo;
 import com.example.backenend1kundhotell.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
                 .map(this::bookingToBookingDto)
                 .collect(Collectors.toList());
     }
-
+/*
     @Override
     public void addBooking(BookingDto bookingDto) {
         Customer customer = customerRepo.findById(bookingDto.getMiniCustomer().getCustomerId())
@@ -66,6 +69,28 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = bookingDtoToBooking(bookingDto, customer, room);
         bookingRepo.save(booking);
     }
+
+ */
+
+    @Override
+    public void addBooking(BookingDto bookingDto) {
+
+        Customer customer = customerRepo.findById(bookingDto.getMiniCustomer().getCustomerId())
+                .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
+        Room room = roomRepo.findById(bookingDto.getMiniRoom().getRoomId())
+                .orElseThrow(() -> new RuntimeException("Rum hittades inte"));
+
+        // Kontrollera att rummet är ledigt med hjälp av hjälpmetoden (se längst ner)
+        if (!isRoomAvailable(room, bookingDto.getStartDate(), bookingDto.getEndDate())) {
+            throw new RuntimeException("Rummet är redan bokat under denna period.");
+        }
+
+        Booking booking = bookingDtoToBooking(bookingDto, customer, room);
+        bookingRepo.save(booking);
+    }
+
+
+
 
     @Override
     public void deleteById(long id) {
@@ -93,6 +118,20 @@ public class BookingServiceImpl implements BookingService {
         booking.setEndDate(bookingDto.getEndDate());
         booking.setExtraBed(bookingDto.getExtraBed());
         bookingRepo.save(booking);
+    }
+
+
+
+    // Hjälpmetod för att kolla om ett rum är ledigt under ett intervall
+    private boolean isRoomAvailable(Room room, LocalDate startDate, LocalDate endDate) {
+        List<Booking> bookings = bookingRepo.findByRoom(room);
+        for (Booking b : bookings) {
+            // Om bokningen matchar med önskat intervall, är rummet upptaget
+            if (!(endDate.isBefore(b.getStartDate()) || startDate.isAfter(b.getEndDate()))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
