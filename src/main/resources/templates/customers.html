@@ -40,9 +40,9 @@
 </div>
 
 <p></p>
-<form action="#" th:action="@{/customers/addCustomer}" method="post">
-  <input type="submit" value="Add new customer"></input>
-</form>
+<a th:href="@{/customers/addCustomer}">
+  <button type="button">Add new customer</button>
+</a>
 
 </body>
 </html>

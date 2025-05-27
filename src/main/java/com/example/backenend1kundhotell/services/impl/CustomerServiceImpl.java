@@ -10,6 +10,7 @@ import com.example.backenend1kundhotell.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,12 +39,18 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto customerToCustomerDto(Customer c){
+        List<MiniBookingDto> miniBookings = new ArrayList<>();
+        if (c.getBookings() != null) {
+            miniBookings = c.getBookings().stream()
+                    .map(b -> new MiniBookingDto(b.getId()))
+                    .toList();
+        }
         return CustomerDto.builder().customerId(c.getCustomerId())
                 .email(c.getEmail())
                 .phone(c.getPhone())
                 .firstName(c.getFirstName())
                 .surname(c.getSurname())
-                .miniBookingDto(c.getBookings().stream().map(b -> new MiniBookingDto(b.getId())).toList())
+                .miniBookingDto(miniBookings)
                 .build();
     }
 
