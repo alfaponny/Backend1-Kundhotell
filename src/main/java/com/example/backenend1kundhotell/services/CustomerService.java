@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface CustomerService {
 
+    Customer miniCustomerDtoToCustomer(MiniCustomerDto c);
+
     public CustomerDto customerToCustomerDto (Customer c);
 
     public MiniCustomerDto customerToMiniCustomerDto (Customer c);

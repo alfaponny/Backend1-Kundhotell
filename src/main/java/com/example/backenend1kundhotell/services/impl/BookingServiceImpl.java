@@ -11,10 +11,13 @@ import com.example.backenend1kundhotell.repos.BookingRepo;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.repos.RoomRepo;
 import com.example.backenend1kundhotell.services.BookingService;
+import com.example.backenend1kundhotell.services.CustomerService;
+import com.example.backenend1kundhotell.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,27 +27,31 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepo bookingRepo;
     private final CustomerRepo customerRepo;
+    private final CustomerService customerService;
+    private final RoomService roomService;
     private final RoomRepo roomRepo;
 
     @Override
     public BookingDto bookingToBookingDto(Booking b) {
         return BookingDto.builder()
-                .bookingId(b.getBookingId())
+                .id(b.getId())
                 .startDate(b.getStartDate())
                 .endDate(b.getEndDate())
                 .extraBed(b.getExtraBed())
+                .miniCustomer(customerService.customerToMiniCustomerDto(b.getCustomer()))
+                .miniRoom(roomService.roomToMiniRoomDto(b.getRoom()))
                 .build();
     }
 
     @Override
     public MiniBookingDto bookingToMiniBookingDto(Booking b) {
-        return MiniBookingDto.builder().bookingId(b.getBookingId()).build();
+        return MiniBookingDto.builder().id(b.getId()).build();
     }
 
     @Override
     public Booking bookingDtoToBooking(BookingDto dto, Customer customer, Room room) {
         Booking booking = new Booking();
-        booking.setBookingId(dto.getBookingId());
+        booking.setId(dto.getId());
         booking.setStartDate(dto.getStartDate());
         booking.setEndDate(dto.getEndDate());
         booking.setExtraBed(dto.getExtraBed());
@@ -73,24 +80,23 @@ public class BookingServiceImpl implements BookingService {
  */
 
     @Override
-    public void addBooking(BookingDto bookingDto) {
+    public void addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId) {
 
-        Customer customer = customerRepo.findById(bookingDto.getMiniCustomer().getCustomerId())
+        Customer customer = customerRepo.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
-        Room room = roomRepo.findById(bookingDto.getMiniRoom().getRoomId())
+        Room room = roomRepo.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Rum hittades inte"));
 
         // Kontrollera att rummet är ledigt med hjälp av hjälpmetoden (se längst ner)
-        if (!isRoomAvailable(room, bookingDto.getStartDate(), bookingDto.getEndDate())) {
+        /*if (!isRoomAvailable(room, bookingDto.getStartDate(), bookingDto.getEndDate())) {
             throw new RuntimeException("Rummet är redan bokat under denna period.");
         }
-
         Booking booking = bookingDtoToBooking(bookingDto, customer, room);
+        */
+        Booking booking = new Booking(startDate, endDate, customer, room, extraBed);
+
         bookingRepo.save(booking);
     }
-
-
-
 
     @Override
     public void deleteById(long id) {
@@ -98,9 +104,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findById(long id) {
-        return bookingRepo.findById(id)
+    public BookingDto findById(long id) {
+        Booking b = bookingRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bokning hittades inte"));
+        return bookingToBookingDto(b);
     }
 
     @Override
@@ -112,11 +119,13 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void updateBooking(BookingDto bookingDto) {
-        Booking booking = bookingRepo.findById(bookingDto.getBookingId())
+        Booking booking = bookingRepo.findById(bookingDto.getId())
                 .orElseThrow(() -> new RuntimeException("Bokning hittades inte"));
         booking.setStartDate(bookingDto.getStartDate());
         booking.setEndDate(bookingDto.getEndDate());
         booking.setExtraBed(bookingDto.getExtraBed());
+        booking.setCustomer(customerService.miniCustomerDtoToCustomer(bookingDto.getMiniCustomer()));
+        booking.setRoom(roomService.miniRoomDtoToRoom(bookingDto.getMiniRoom()));
         bookingRepo.save(booking);
     }
 

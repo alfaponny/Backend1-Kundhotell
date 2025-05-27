@@ -18,4 +18,6 @@ public interface RoomService {
     void addRoom(int maxExtraBed, String roomType);
 
     void deleteRoomById(long id);
+
+    public Room miniRoomDtoToRoom(MiniRoomDto miniRoom);
 }

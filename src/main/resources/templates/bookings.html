@@ -14,11 +14,12 @@
         <tr th:each="booking : ${allBookings}">
             <td th:text="${booking.startDate}+' '+${booking.endDate}"></td><br>
             <br>
-            <td th:text="${booking.customerId}"></td><br>
+            <td th:text="${booking.miniCustomer.customerId}"></td><br>
+            <td th:text="${booking.miniRoom.roomId}"></td><br>
             <br>
             <td th:text="${booking.extraBed}"></td>
-            <td><a th:href="@{/bookings/deleteById/{id}(id=${booking.bookingId})}">Delete</a></td>
-            <td><a th:href="@{/bookings/updateById/{id}(id=${booking.bookingId})}">Update</a></td>
+            <td><a th:href="@{/bookings/deleteById/{id}(id=${booking.id})}">Delete</a></td>
+            <td><a th:href="@{/bookings/updateById/{id}(id=${booking.id})}">Update</a></td>
 
         </tr>
         </tbody>

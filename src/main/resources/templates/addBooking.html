@@ -11,8 +11,9 @@
   <input type="text" id="startDate" name="startDate" value=""><br><br>
   <label for="endDate"> End date:</label><br>
   <input type="text" id="endDate" name="endDate" value=""><br><br>
-  <label for="customerId"> Customer Id:</label><br>
-  <input type="text" id="customerId" name="customerId" value=""><br><br>
+  <input type="hidden" id="customerId" name="customerId" th:value="*{customerId}">
+  <!--<label for="customerId"> Customer Id:</label><br>
+  <input type="text" id="customerId" name="customerId" value=""><br><br>-->
   <label for="roomId"> Room Id:</label><br>
   <input type="text" id="roomId" name="roomId" value=""><br><br>
   <label for="extraBed"> Extra beds:</label><br>

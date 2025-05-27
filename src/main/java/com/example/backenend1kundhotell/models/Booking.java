@@ -2,6 +2,8 @@ package com.example.backenend1kundhotell.models;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,14 +12,16 @@ import java.time.LocalDate;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Booking {
 
 	@Id
 	@GeneratedValue
-	private long bookingId;
+	private long id;
+
 	private LocalDate startDate;
 	private LocalDate endDate;
-	long customerId;
 	int extraBed;
 
 	public Booking(LocalDate startDate, LocalDate endDate, int extraBed) {
