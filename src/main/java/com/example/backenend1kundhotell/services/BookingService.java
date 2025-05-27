@@ -24,7 +24,7 @@ public interface BookingService {
 
     public List<BookingDto> getAllBookings();
 
-    public  String addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId);
+    public  String addBooking(BookingDto bookingDto);
 
     public void deleteById(long id);
 
@@ -34,5 +34,7 @@ public interface BookingService {
 
     public BookingDto getBookingById(long id);
 
-    boolean isRoomAvailable(long roomId, LocalDate startDate, LocalDate endDate);
+
+    // Hjälpmetod för att kolla om ett rum är ledigt under ett intervall
+    public boolean isRoomAvailable(Room room, LocalDate startDate, LocalDate endDate);
 }

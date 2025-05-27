@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,43 +57,22 @@ public class BookingServiceImpl implements BookingService {
                 .collect(Collectors.toList());
     }
 
-/*
     @Override
-    public void addBooking(BookingDto bookingDto) {
+    public String addBooking(BookingDto bookingDto) {
+
         Customer customer = customerRepo.findById(bookingDto.getMiniCustomer().getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
-        Room room = roomRepo.findById(bookingDto.getMiniRoom().getRoomId())
-                .orElseThrow(() -> new RuntimeException("Rum hittades inte"));
-        Booking booking = bookingDtoToBooking(bookingDto, customer, room);
-        bookingRepo.save(booking);
-    }
-
- */
-
-    @Override
-    public String addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId) {
-
-        Customer customer = customerRepo.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("The customer was not found"));
-        Room room = roomRepo.findById(roomId)
+        Room room = roomRepo.findById(bookingDto.getMiniRoom().getRoomId())
                 .orElseThrow(() -> new RuntimeException("The room was not found"));
 
-        if(!isRoomAvailable(roomId, startDate, endDate)){
-            throw new IllegalArgumentException("The room is already booked during this period");
-        }
-
-
-       if(extraBed > room.getMaxExtraBed()){
+       if(bookingDto.getExtraBed() > room.getMaxExtraBed()){
            return "ERROR: Choose less extra beds";
        }
        // Kontrollera att rummet är ledigt med hjälp av hjälpmetoden (se längst ner)
-        if (!isRoomAvailable(room, startDate, endDate)) {
+        if(!isRoomAvailable(room, bookingDto.getStartDate(), bookingDto.getEndDate())){
             return "ERROR: The room is booked, choose another one";
-            //throw new RuntimeException("Rummet är redan bokat under denna period.");
         }
-        /*Booking booking = bookingDtoToBooking(bookingDto, customer, room);
-        */
-        Booking booking = new Booking(startDate, endDate, customer, room, extraBed);
+        Booking booking = bookingDtoToBooking(bookingDto, customer, room);
         bookingRepo.save(booking);
         return "Booking is saved";
     }
@@ -131,14 +109,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-
-
     // Hjälpmetod för att kolla om ett rum är ledigt under ett intervall
-
-    public boolean isRoomAvailable(long roomId, LocalDate startDate, LocalDate endDate) {
-        Room room = roomRepo.findById(roomId).orElseThrow(() -> new RuntimeException("The room was not found"));
-
-    List<Booking> bookings = bookingRepo.findByRoom(room);
+    @Override
+    public boolean isRoomAvailable(Room room, LocalDate startDate, LocalDate endDate) {
+        //Room room = roomRepo.findById(roomId).orElseThrow(() -> new RuntimeException("The room was not found"));
+        List<Booking> bookings = bookingRepo.findByRoom(room);
 
         for (Booking b : bookings) {
             // Om bokningen matchar med önskat intervall, är rummet upptaget

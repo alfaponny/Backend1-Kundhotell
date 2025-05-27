@@ -37,34 +37,22 @@ public class BookingController {
 	}
 
 	@PostMapping ("/add")
-	public String addBooking(@Valid BookingDto bookingDto, BindingResult result, Model model) {
+	public String addBooking(@Valid BookingDto bookingDto, BindingResult result, RedirectAttributes redirect,
+							 Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("customerId", bookingDto.getMiniCustomer()
 					.getCustomerId());
-			return "addBooking.html";
+			return "addBooking";
 		}
-		long roomId=bookingDto.getMiniRoom().getRoomId();
-		LocalDate startDate = bookingDto.getStartDate();
-		LocalDate endDate = bookingDto.getEndDate();
-
-		if(!bookingService.isRoomAvailable(roomId, startDate, endDate)){
-			result.rejectValue("startDate", null, "The room is booked during this period");
-			model.addAttribute("customerId", bookingDto.getMiniCustomer().getCustomerId());
-			return "addBooking.html";
-
-		String answer = bookingService.addBooking(startDate, endDate, extraBed, customerId, roomId);
+		String answer = bookingService.addBooking(bookingDto);
 		if (answer.contains("ERROR")) {
 			redirect.addFlashAttribute("message", answer);
-			return "redirect:/bookings/add?customerId=" + customerId;
+			return "redirect:/bookings/add?customerId=" + bookingDto.getMiniCustomer().getCustomerId();
 		}
 		redirect.addFlashAttribute("message", answer);
 		return "redirect:/bookings/all";
 		}
-		bookingService.addBooking(startDate, endDate, bookingDto.getExtraBed(),
-				bookingDto.getMiniCustomer().getCustomerId(), roomId
-		);
-		return "redirect:bookings/all";
-	}
+
 
 	@GetMapping("/add")
 	public String showAddBookingForm(@RequestParam long customerId, Model model) {
