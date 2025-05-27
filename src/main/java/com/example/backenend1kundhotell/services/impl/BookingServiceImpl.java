@@ -79,7 +79,7 @@ public class BookingServiceImpl implements BookingService {
         Room room = roomRepo.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("The room was not found"));
 
-        if(!isRoomAvailable(room, startDate, endDate)){
+        if(!isRoomAvailable(roomId, startDate, endDate)){
             throw new IllegalArgumentException("The room is already booked during this period");
         }
 

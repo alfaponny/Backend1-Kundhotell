@@ -52,7 +52,9 @@ public class BookingController {
 			return "addBooking.html";
 
 		}
-		bookingService.addBooking(bookingDto);
+		bookingService.addBooking(startDate, endDate, bookingDto.getExtraBed(),
+				bookingDto.getMiniCustomer().getCustomerId(), roomId
+		);
 		return "redirect:bookings/all";
 	}
 
