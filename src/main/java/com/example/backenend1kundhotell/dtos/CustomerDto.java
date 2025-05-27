@@ -31,13 +31,12 @@ public class CustomerDto {
     private String surname;
 
     @Email(message = "Email must be valid")
-    @NotBlank(message = "E-mail annot be blank")
+    @NotBlank(message = "E-mail cannot be blank")
     private String email;
 
     @NotBlank (message = "Phone number needed")
     @Pattern(regexp = "\\d{7,15}", message = "Phone number must be between 7 and 15 digits")
     private String phone;
-
 
 
     MiniBookingDto miniBookingDto;

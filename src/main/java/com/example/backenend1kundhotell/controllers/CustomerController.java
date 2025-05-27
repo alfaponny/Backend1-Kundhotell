@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class CustomerController {
 
 	@PostMapping("/add")
 	public String addCustomer(@Valid @ModelAttribute("customer") CustomerDto customerDto, //BindingResult fångar valideringfel
-							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
+							  BindingResult result, //ModelAttribute("customer") skapar ett nytt Customer-objekt
 							  Model model) {
 		if(result.hasErrors()) {
 			model.addAttribute("allCustomers", customerService.getAllCustomers());
@@ -55,10 +56,14 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/deleteById/{id}")
-	public String deleteCustomerByID(@PathVariable long id, Model model) {
+	public String deleteCustomerByID(@PathVariable long id, RedirectAttributes redirect) {
 		//I den metoden behöver man kolla om kunden har aktiva bokningar
 		String answer = customerService.deleteById(id);
-	//	model
+		if (answer.equals("Customer deleted")) {
+			redirect.addFlashAttribute("successMessage", answer);
+		} else {
+			redirect.addFlashAttribute("errorMessage", answer);
+		}
 		return "redirect:/customers/all";
 	}
 
