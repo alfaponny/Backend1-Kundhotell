@@ -23,11 +23,11 @@ import java.util.List;
 public class Customer {
 	@Id
 	@GeneratedValue
-	long customerId;
-	String firstName;
-	String surname;
-	String email;
-	String phone;
+	private long customerId;
+	private String firstName;
+	private String surname;
+	private String email;
+	private String phone;
 
 	public Customer(String firstName, String surname, String email, String phone) {
 		this.firstName = firstName;

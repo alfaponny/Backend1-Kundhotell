@@ -2,7 +2,6 @@ package com.example.backenend1kundhotell.controllers;
 
 
 import com.example.backenend1kundhotell.dtos.BookingDto;
-import com.example.backenend1kundhotell.models.Booking;
 import com.example.backenend1kundhotell.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Controller

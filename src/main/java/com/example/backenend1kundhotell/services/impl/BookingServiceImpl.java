@@ -1,9 +1,6 @@
 package com.example.backenend1kundhotell.services.impl;
 
-import com.example.backenend1kundhotell.dtos.BookingDto;
-import com.example.backenend1kundhotell.dtos.CustomerDto;
-import com.example.backenend1kundhotell.dtos.MiniBookingDto;
-import com.example.backenend1kundhotell.dtos.RoomDto;
+import com.example.backenend1kundhotell.dtos.*;
 import com.example.backenend1kundhotell.models.Booking;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.models.Room;
@@ -38,7 +35,7 @@ public class BookingServiceImpl implements BookingService {
                 .startDate(b.getStartDate())
                 .endDate(b.getEndDate())
                 .extraBed(b.getExtraBed())
-                .miniCustomer(customerService.customerToMiniCustomerDto(b.getCustomer()))
+                .miniCustomer(new MiniCustomerDto(b.getCustomer().getCustomerId(), b.getCustomer().getFirstName(), b.getCustomer().getSurname()))
                 .miniRoom(roomService.roomToMiniRoomDto(b.getRoom()))
                 .build();
     }
@@ -50,14 +47,8 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking bookingDtoToBooking(BookingDto dto, Customer customer, Room room) {
-        Booking booking = new Booking();
-        booking.setId(dto.getId());
-        booking.setStartDate(dto.getStartDate());
-        booking.setEndDate(dto.getEndDate());
-        booking.setExtraBed(dto.getExtraBed());
-        booking.setCustomer(customer);
-        booking.setRoom(room);
-        return booking;
+        return Booking.builder().id(dto.getId()).startDate(dto.getStartDate()).endDate(dto.getEndDate())
+                .extraBed(dto.getExtraBed()).customer(customer).room(room).build();
     }
 
     @Override

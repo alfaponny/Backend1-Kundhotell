@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class MiniCustomerDto {
-    long customerId;
-    String firstName;
-    String surname;
+    private long customerId;
+    private String firstName;
+    private String surname;
 }

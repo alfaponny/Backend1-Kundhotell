@@ -1,8 +1,6 @@
 package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.RoomDto;
-import com.example.backenend1kundhotell.models.Room;
-import com.example.backenend1kundhotell.repos.RoomRepo;
 import com.example.backenend1kundhotell.services.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import java.util.List;
 public class RoomController {
 
         private final RoomService roomService;
-        private final RoomRepo roomRepo;
 
         @RequestMapping("/all")
         public String getAllRooms(Model model) {

@@ -1,9 +1,11 @@
 package com.example.backenend1kundhotell.services.impl;
 
 import com.example.backenend1kundhotell.dtos.CustomerDto;
+import com.example.backenend1kundhotell.dtos.MiniBookingDto;
 import com.example.backenend1kundhotell.dtos.MiniCustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
+import com.example.backenend1kundhotell.services.BookingService;
 import com.example.backenend1kundhotell.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +42,9 @@ public class CustomerServiceImpl implements CustomerService {
                 .email(c.getEmail())
                 .phone(c.getPhone())
                 .firstName(c.getFirstName())
-                .surname(c.getSurname()).build();
+                .surname(c.getSurname())
+                .miniBookingDto(c.getBookings().stream().map(b -> new MiniBookingDto(b.getId())).toList())
+                .build();
     }
 
     @Override
