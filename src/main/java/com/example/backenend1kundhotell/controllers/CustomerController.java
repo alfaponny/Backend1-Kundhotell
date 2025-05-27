@@ -70,7 +70,7 @@ public class CustomerController {
 		return "updateCustomer";
 	}
 
-	@RequestMapping ("/update")
+	@PostMapping ("/update")
 	public String updateCustomer(@ModelAttribute("customer") @Valid CustomerDto customerDto,
 								 BindingResult result) {
 		if(result.hasErrors()) {
