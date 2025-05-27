@@ -13,12 +13,18 @@ import java.time.LocalDate;
 @Builder
 
 public class BookingDto {
-    long bookingId;
+    long id;
     LocalDate startDate;
     LocalDate endDate;
     int extraBed;
     MiniCustomerDto miniCustomer;
     MiniRoomDto miniRoom;
+
+    public BookingDto(LocalDate startDate, LocalDate endDate, int extraBed) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.extraBed = extraBed;
+    }
 
 
 }

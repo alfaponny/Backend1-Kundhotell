@@ -13,7 +13,9 @@
     <label for="endDate"> End date:</label><br>
     <input type="text" id="endDate" th:field="*{endDate}"><br><br>
     <label for="customerId"> Customer Id:</label><br>
-    <input type="text" id="customerId" th:field="*{customerId}"><br><br>
+    <input type="text" id="customerId" th:field="*{miniCustomer.customerId}"><br><br>
+    <label for="roomId"> Room Id:</label><br>
+    <input type="text" id="roomId" th:field="*{miniRoom.roomId}"><br><br>
     <label for="extraBed"> Surname:</label><br>
     <input type="text" id="extraBed" th:field="*{extraBed}"><br><br>
     <input type="hidden" id="id" th:field="*{id}"><br><br>

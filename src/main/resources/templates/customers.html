@@ -5,6 +5,8 @@
   <title>Title</title>
 </head>
 <body>
+<div th:if="${successMessage}" class="alert alert-sucess" th:text="${successMessage}"></div>
+<div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
 <h2 th:text="${title}"></h2>
 <div class="allCustomers" th:unless="${#lists.isEmpty(allCustomers)}">
   <table>
@@ -22,6 +24,8 @@
       <td th:text="${customer.phone}"></td>
       <td><a th:href="@{/customers/deleteById/{id}(id=${customer.customerId})}">Delete</a></td>
       <td><a th:href="@{/customers/updateById/{id}(id=${customer.customerId})}">Update</a></td>
+      <td><a th:href="@{/bookings/addBooking/{customerId}(customerId=${customer.customerId})}">Add booking</a></td>
+
 
     </tr>
     </tbody>

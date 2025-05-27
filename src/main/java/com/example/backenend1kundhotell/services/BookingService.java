@@ -9,6 +9,7 @@ import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.models.Room;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -23,11 +24,11 @@ public interface BookingService {
 
     public List<BookingDto> getAllBookings();
 
-    public  void addBooking( BookingDto bookingDto);
+    public  void addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId);
 
     public void deleteById(long id);
 
-    public Booking findById(long id);
+    public BookingDto findById(long id);
 
     public void updateBooking( BookingDto bookingDto);
 

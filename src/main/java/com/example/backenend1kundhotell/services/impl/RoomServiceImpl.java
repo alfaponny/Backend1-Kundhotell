@@ -59,5 +59,10 @@ public class RoomServiceImpl implements RoomService {
     public void deleteRoomById(long roomId){
         roomRepo.deleteById(roomId);
     }
+
+    @Override
+    public Room miniRoomDtoToRoom(MiniRoomDto miniRoom) {
+        return Room.builder().roomId(miniRoom.getRoomId()).build();
+    }
 }
 

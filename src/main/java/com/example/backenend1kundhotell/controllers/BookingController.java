@@ -7,11 +7,10 @@ import com.example.backenend1kundhotell.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -61,8 +60,6 @@ public class BookingController {
 		bookingService.updateBooking(bookingDto);
 		//Lägga till felmeddelande när kunden inte hittades, eller ändringar inte kunde genomföras
 		return "redirect:/bookings/all";
-
+	}
 
 }
-}
-
