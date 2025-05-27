@@ -34,4 +34,5 @@ public interface BookingService {
 
     public BookingDto getBookingById(long id);
 
+    boolean isRoomAvailable(long roomId, LocalDate startDate, LocalDate endDate);
 }

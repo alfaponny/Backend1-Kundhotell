@@ -3,9 +3,11 @@ package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.BookingDto;
 import com.example.backenend1kundhotell.services.BookingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,9 +37,20 @@ public class BookingController {
 	}
 
 	@PostMapping ("/add")
-	public String addBooking(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
-							 @RequestParam int extraBed, @RequestParam long customerId,
-							 @RequestParam long roomId, Model model, RedirectAttributes redirect){
+	public String addBooking(@Valid BookingDto bookingDto, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("customerId", bookingDto.getMiniCustomer()
+					.getCustomerId());
+			return "addBooking.html";
+		}
+		long roomId=bookingDto.getMiniRoom().getRoomId();
+		LocalDate startDate = bookingDto.getStartDate();
+		LocalDate endDate = bookingDto.getEndDate();
+
+		if(!bookingService.isRoomAvailable(roomId, startDate, endDate)){
+			result.rejectValue("startDate", null, "The room is booked during this period");
+			model.addAttribute("customerId", bookingDto.getMiniCustomer().getCustomerId());
+			return "addBooking.html";
 
 		String answer = bookingService.addBooking(startDate, endDate, extraBed, customerId, roomId);
 		if (answer.contains("ERROR")) {
@@ -46,6 +59,11 @@ public class BookingController {
 		}
 		redirect.addFlashAttribute("message", answer);
 		return "redirect:/bookings/all";
+		}
+		bookingService.addBooking(startDate, endDate, bookingDto.getExtraBed(),
+				bookingDto.getMiniCustomer().getCustomerId(), roomId
+		);
+		return "redirect:bookings/all";
 	}
 
 	@GetMapping("/add")

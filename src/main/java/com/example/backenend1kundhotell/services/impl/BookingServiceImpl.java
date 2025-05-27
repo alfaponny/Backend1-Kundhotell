@@ -57,6 +57,7 @@ public class BookingServiceImpl implements BookingService {
                 .map(this::bookingToBookingDto)
                 .collect(Collectors.toList());
     }
+
 /*
     @Override
     public void addBooking(BookingDto bookingDto) {
@@ -74,9 +75,14 @@ public class BookingServiceImpl implements BookingService {
     public String addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId) {
 
         Customer customer = customerRepo.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
+                .orElseThrow(() -> new RuntimeException("The customer was not found"));
         Room room = roomRepo.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Rum hittades inte"));
+                .orElseThrow(() -> new RuntimeException("The room was not found"));
+
+        if(!isRoomAvailable(roomId, startDate, endDate)){
+            throw new IllegalArgumentException("The room is already booked during this period");
+        }
+
 
        if(extraBed > room.getMaxExtraBed()){
            return "ERROR: Choose less extra beds";
@@ -89,7 +95,6 @@ public class BookingServiceImpl implements BookingService {
         /*Booking booking = bookingDtoToBooking(bookingDto, customer, room);
         */
         Booking booking = new Booking(startDate, endDate, customer, room, extraBed);
-
         bookingRepo.save(booking);
         return "Booking is saved";
     }
@@ -127,9 +132,14 @@ public class BookingServiceImpl implements BookingService {
 
 
 
+
     // Hjälpmetod för att kolla om ett rum är ledigt under ett intervall
-    private boolean isRoomAvailable(Room room, LocalDate startDate, LocalDate endDate) {
-        List<Booking> bookings = bookingRepo.findByRoom(room);
+
+    public boolean isRoomAvailable(long roomId, LocalDate startDate, LocalDate endDate) {
+        Room room = roomRepo.findById(roomId).orElseThrow(() -> new RuntimeException("The room was not found"));
+
+    List<Booking> bookings = bookingRepo.findByRoom(room);
+
         for (Booking b : bookings) {
             // Om bokningen matchar med önskat intervall, är rummet upptaget
             if (!(endDate.isBefore(b.getStartDate()) || startDate.isAfter(b.getEndDate()))) {
