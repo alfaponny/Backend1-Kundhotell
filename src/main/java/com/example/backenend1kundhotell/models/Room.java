@@ -11,7 +11,7 @@ public class Room {
 	@Id
 	@GeneratedValue
 	private long roomId;
-	int maxExtraBed;
+	private int maxExtraBed;
 
 
 	@Enumerated(EnumType.STRING)

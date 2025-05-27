@@ -7,13 +7,15 @@
 <body>
 
 <form action="#" th:action="@{/bookings/add}" method="post">
-  <label for="startDate"> Firstname:</label><br>
+  <label for="startDate"> Start date:</label><br>
   <input type="text" id="startDate" name="startDate" value=""><br><br>
-  <label for="endDate"> Surname:</label><br>
+  <label for="endDate"> End date:</label><br>
   <input type="text" id="endDate" name="endDate" value=""><br><br>
-  <label for="customerId"> E-mail:</label><br>
+  <label for="customerId"> Customer Id:</label><br>
   <input type="text" id="customerId" name="customerId" value=""><br><br>
-  <label for="extraBed"> Phone number:</label><br>
+  <label for="roomId"> Room Id:</label><br>
+  <input type="text" id="roomId" name="roomId" value=""><br><br>
+  <label for="extraBed"> Extra beds:</label><br>
   <input type="text" id="extraBed" name="extraBed" value=""><br><br>
   <input type="submit" value="Submit"></input>
 </form>
