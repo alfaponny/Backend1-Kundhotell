@@ -17,11 +17,14 @@
     </thead>
     <tbody>
     <tr th:each="customer : ${allCustomers}">
-      <td th:text="${customer.firstName}+' '+${customer.surname}"></td>
+      <td th:text="'Name: '+${customer.firstName}+' '+${customer.surname}"></td>
       <br>
-      <td th:text="${customer.email}"></td>
+      <td th:text="'E-mail: '+${customer.email}"></td>
 
-      <td th:text="${customer.phone}"></td>
+      <td th:text="'Phone number: '+${customer.phone}"></td>
+
+      <td th:if="${customer.miniBookingDto != null}" th:text="'Booking id: '+${customer.miniBookingDto.id}"></td>
+
       <td><a th:href="@{/customers/deleteById/{id}(id=${customer.customerId})}">Delete</a></td>
       <td><a th:href="@{/customers/updateById/{id}(id=${customer.customerId})}">Update</a></td>
       <td><a th:href="@{/bookings/addBooking/{customerId}(customerId=${customer.customerId})}">Add booking</a></td>

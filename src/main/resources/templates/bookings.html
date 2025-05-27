@@ -12,12 +12,12 @@
         <th th:text="${name}"></th>
         <tbody>
         <tr th:each="booking : ${allBookings}">
-            <td th:text="${booking.startDate}+' '+${booking.endDate}"></td><br>
+            <td th:text="'Start date: '+${booking.startDate}+', end date: '+${booking.endDate}"></td><br>
             <br>
-            <td th:text="${booking.miniCustomer.customerId}"></td><br>
-            <td th:text="${booking.miniRoom.roomId}"></td><br>
+            <td th:text="'Customer id: '+${booking.miniCustomer.customerId}"></td><br>
+            <td th:text="'Room id: '+${booking.miniRoom.roomId}"></td><br>
             <br>
-            <td th:text="${booking.extraBed}"></td>
+            <td th:text="'Extra beds: '+${booking.extraBed}"></td>
             <td><a th:href="@{/bookings/deleteById/{id}(id=${booking.id})}">Delete</a></td>
             <td><a th:href="@{/bookings/updateById/{id}(id=${booking.id})}">Update</a></td>
 
@@ -27,17 +27,9 @@
 </div>
 
 <p></p>
-<!--<form action="#" th:action="@{/bookings/add}" method="post">
-    <label for="firstName"> Firstname:</label><br>
-    <input type="text" id="firstName" name="firstName" value=""><br><br>
-    <label for="surname"> Surname:</label><br>
-    <input type="text" id="surname" name="surname" value=""><br><br>
-    <label for="email"> E-mail:</label><br>
-    <input type="text" id="email" name="email" value=""><br><br>
-    <label for="phone"> Phone number:</label><br>
-    <input type="text" id="phone" name="phone" value=""><br><br>
-    <input type="submit" value="Submit"></input>
-</form>-->
+<form action="#" th:action="@{/customers/all}" method="post">
+    <input type="submit" value="All customers"></input>
+</form>
 
 </body>
 </html>
