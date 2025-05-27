@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -36,10 +37,21 @@ public class BookingController {
 	@PostMapping ("/add")
 	public String addBooking(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
 							 @RequestParam int extraBed, @RequestParam long customerId,
-							 @RequestParam long roomId, Model model){
+							 @RequestParam long roomId, Model model, RedirectAttributes redirect){
 
-		bookingService.addBooking(startDate, endDate, extraBed, customerId, roomId);
+		String answer = bookingService.addBooking(startDate, endDate, extraBed, customerId, roomId);
+		if (answer.contains("ERROR")) {
+			redirect.addFlashAttribute("message", answer);
+			return "redirect:/bookings/add?customerId=" + customerId;
+		}
+		redirect.addFlashAttribute("message", answer);
 		return "redirect:/bookings/all";
+	}
+
+	@GetMapping("/add")
+	public String showAddBookingForm(@RequestParam long customerId, Model model) {
+		model.addAttribute("customerId", customerId);
+		return "addBooking.html";
 	}
 
 	@RequestMapping("/deleteById/{id}")

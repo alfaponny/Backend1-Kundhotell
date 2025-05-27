@@ -24,7 +24,7 @@ public interface BookingService {
 
     public List<BookingDto> getAllBookings();
 
-    public  void addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId);
+    public  String addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId);
 
     public void deleteById(long id);
 

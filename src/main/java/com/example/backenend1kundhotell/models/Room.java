@@ -1,6 +1,7 @@
 package com.example.backenend1kundhotell.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,8 @@ public class Room {
 	@Id
 	@GeneratedValue
 	private long roomId;
+
+	//@Size(max=2, message="You chose too many extra beds")
 	private int maxExtraBed;
 
 
@@ -22,7 +25,6 @@ public class Room {
 	private RoomType roomType;
 
 	public Room(int maxExtraBed, RoomType roomtype) {
-
 		this.maxExtraBed = maxExtraBed;
 		this.roomType = roomtype;
 	}

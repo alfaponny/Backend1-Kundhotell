@@ -71,22 +71,27 @@ public class BookingServiceImpl implements BookingService {
  */
 
     @Override
-    public void addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId) {
+    public String addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId) {
 
         Customer customer = customerRepo.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
         Room room = roomRepo.findById(roomId)
                 .orElseThrow(() -> new RuntimeException("Rum hittades inte"));
 
-        // Kontrollera att rummet är ledigt med hjälp av hjälpmetoden (se längst ner)
-        /*if (!isRoomAvailable(room, bookingDto.getStartDate(), bookingDto.getEndDate())) {
-            throw new RuntimeException("Rummet är redan bokat under denna period.");
+       if(extraBed > room.getMaxExtraBed()){
+           return "ERROR: Choose less extra beds";
+       }
+       // Kontrollera att rummet är ledigt med hjälp av hjälpmetoden (se längst ner)
+        if (!isRoomAvailable(room, startDate, endDate)) {
+            return "ERROR: The room is booked, choose another one";
+            //throw new RuntimeException("Rummet är redan bokat under denna period.");
         }
-        Booking booking = bookingDtoToBooking(bookingDto, customer, room);
+        /*Booking booking = bookingDtoToBooking(bookingDto, customer, room);
         */
         Booking booking = new Booking(startDate, endDate, customer, room, extraBed);
 
         bookingRepo.save(booking);
+        return "Booking is saved";
     }
 
     @Override
