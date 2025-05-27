@@ -6,6 +6,7 @@ import com.example.backenend1kundhotell.dtos.MiniBookingDto;
 import com.example.backenend1kundhotell.dtos.MiniCustomerDto;
 import com.example.backenend1kundhotell.models.Booking;
 import com.example.backenend1kundhotell.models.Customer;
+import com.example.backenend1kundhotell.models.Room;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -15,7 +16,8 @@ public interface BookingService {
 
     public BookingDto bookingToBookingDto (Booking b);
 
-           Booking bookingDtoToBooking (BookingDto b);
+           Booking bookingDtoToBooking (BookingDto dto, Customer customer, Room room);
+
     public MiniBookingDto bookingToMiniBookingDto (Booking b);
 
 
@@ -29,5 +31,6 @@ public interface BookingService {
 
     public void updateBooking( BookingDto bookingDto);
 
+    public BookingDto getBookingById(long id);
 
 }
