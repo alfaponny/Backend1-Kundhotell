@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +22,13 @@ public class CustomerServiceImpl implements CustomerService {
         return Customer.builder().customerId(c.getCustomerId())
                 .email(c.getEmail())
                 .phone(c.getPhone())
+                .firstName(c.getFirstName())
+                .surname(c.getSurname()).build();
+    }
+
+    @Override
+    public Customer miniCustomerDtoToCustomer(MiniCustomerDto c){
+        return Customer.builder().customerId(c.getCustomerId())
                 .firstName(c.getFirstName())
                 .surname(c.getSurname()).build();
     }
