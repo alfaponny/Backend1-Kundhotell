@@ -19,8 +19,7 @@ import lombok.NoArgsConstructor;
 @Builder
 
 public class CustomerDto {
-    @Id
-    @GeneratedValue
+
     private long customerId;
 
     @NotBlank(message = "Firstname cannot be empty")

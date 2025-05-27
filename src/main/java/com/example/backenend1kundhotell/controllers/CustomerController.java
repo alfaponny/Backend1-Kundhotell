@@ -34,14 +34,14 @@ public class CustomerController {
 		return "customers";
 	}
 
-	@RequestMapping("/addCustomer")
+	@GetMapping("/addCustomer")
 	public String addNewCustomer(Model model) {
 		model.addAttribute("customer", new CustomerDto());
 		return "addCustomer";
 	}
 
-	@RequestMapping("/add")
-	public String addCustomer(@ModelAttribute @Valid CustomerDto customerDto, //BindingResult fångar valideringfel
+	@PostMapping("/add")
+	public String addCustomer(@Valid @ModelAttribute("customer") CustomerDto customerDto, //BindingResult fångar valideringfel
 							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
 		if(result.hasErrors()) {
