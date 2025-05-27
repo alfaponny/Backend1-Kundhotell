@@ -27,14 +27,18 @@ public class BookingController {
 		return "bookings.html";
 	}
 
-	@RequestMapping("/addBooking")
-	public String addNewBookings() {
+	@RequestMapping("/addBooking/{customerId}")
+	public String addNewBookings(@PathVariable long customerId, Model model) {
+		model.addAttribute("customerId", customerId);
 		return "addBooking.html";
 	}
 
-	@RequestMapping("/add")
-	public String addBooking(@RequestBody BookingDto bookingDto, Model model){
-		bookingService.addBooking(bookingDto);
+	@PostMapping ("/add")
+	public String addBooking(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
+							 @RequestParam int extraBed, @RequestParam long customerId,
+							 @RequestParam long roomId, Model model){
+
+		bookingService.addBooking(startDate, endDate, extraBed, customerId, roomId);
 		return "redirect:/bookings/all";
 	}
 
@@ -46,7 +50,7 @@ public class BookingController {
 
 	@RequestMapping("/updateById/{id}")
 	public String updateBookingByID(@PathVariable long id, Model model) {
-		Booking b = bookingService.findById(id);
+		BookingDto b = bookingService.findById(id);
 		//Bokningen som hittas skickas vidare till uppdaterings formulär sidan
 		model.addAttribute("booking", b);
 		return "updateBooking.html";
