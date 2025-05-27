@@ -19,6 +19,15 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepo customerRepo;
 
     @Override
+    public Customer customerDtoToCustomer(CustomerDto c){
+        return Customer.builder().customerId(c.getCustomerId())
+                .email(c.getEmail())
+                .phone(c.getPhone())
+                .firstName(c.getFirstName())
+                .surname(c.getSurname()).build();
+    }
+
+    @Override
     public CustomerDto customerToCustomerDto(Customer c){
         return CustomerDto.builder().customerId(c.getCustomerId())
                 .email(c.getEmail())
@@ -40,17 +49,29 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void addCustomer(String firstName, String surname, String email, String phone){
-        customerRepo.save(new Customer(firstName, surname, email, phone));
+    public void addCustomer(CustomerDto customerDto) {
+        Customer customer = customerDtoToCustomer(customerDto);
+        customerRepo.save(customer);
     }
     @Override
-    public void deleteById(long id){
-        customerRepo.deleteById(id);
+    public void updateCustomer(CustomerDto customerDto) {
+        Customer customer = customerDtoToCustomer(customerDto);
+        customerRepo.save(customer);
+    }
+    @Override
+    public String deleteById(long id){
+        Customer customer = customerRepo.findById(id).get();
+        if(customer.getBookings().isEmpty()){
+            customerRepo.deleteById(id);
+            return "Customer deleted";
+        }
+        return "Customer has active bookings";
     }
 
     @Override
-    public Customer findById(long id) {
-        return customerRepo.findById(id).orElse(null);
+    public CustomerDto findById(long id) {
+        Customer customer = customerRepo.findById(id).orElse(null);
+        return customerToCustomerDto(customer);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class BookingController {
 
 	private final BookingService bookingService;
 
-	@RequestMapping("/all")
+	/*@RequestMapping("/all")
 	public String getAllBookings(Model model) {
 		List<BookingDto> bookings = bookingService.getAllBookings();
 		model.addAttribute("allBookings", bookings);
@@ -61,6 +61,6 @@ public class BookingController {
 		bookingService.updateBooking(bookingDto);
 		//Lägga till felmeddelande när kunden inte hittades, eller ändringar inte kunde genomföras
 		return "redirect:/bookings/all";
-	}
+	}*/
 
 }

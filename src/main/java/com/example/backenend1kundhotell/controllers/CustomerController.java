@@ -4,12 +4,12 @@ import com.example.backenend1kundhotell.dtos.CustomerDto;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.services.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,42 +35,49 @@ public class CustomerController {
 	}
 
 	@RequestMapping("/addCustomer")
-	public String addNewCustomer() {
-		return "addCustomer.html";
+	public String addNewCustomer(Model model) {
+		model.addAttribute("customer", new CustomerDto());
+		return "addCustomer";
 	}
 
 	@RequestMapping("/add")
-	public String addCustomer(@RequestParam String firstName, @RequestParam String surname,
-							  @RequestParam String email, @RequestParam String phone,
+	public String addCustomer(@ModelAttribute @Valid CustomerDto customerDto, //BindingResult fångar valideringfel
+							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
-		customerService.addCustomer(firstName, surname, email, phone);
+		if(result.hasErrors()) {
+			model.addAttribute("allCustomers", customerService.getAllCustomers());
+			model.addAttribute("title", "Customers");
+			model.addAttribute("name", "Customer details");
+			return "addCustomer";
+		}
+		customerService.addCustomer(customerDto);
 		return "redirect:/customers/all";
 	}
 
 	@RequestMapping("/deleteById/{id}")
-	public String deleteCustomerByID(@PathVariable long id) {
+	public String deleteCustomerByID(@PathVariable long id, Model model) {
 		//I den metoden behöver man kolla om kunden har aktiva bokningar
-		customerService.deleteById(id);
+		String answer = customerService.deleteById(id);
+	//	model
 		return "redirect:/customers/all";
 	}
 
 	@RequestMapping("/updateById/{id}")
-	public String updateCustomerByID(@PathVariable long id, Model model) {
-		Customer c = customerService.findById(id);
+	public String updateCustomerById(@PathVariable long id, Model model) {
+		CustomerDto c = customerService.findById(id);
 		//Kunden som hittas skickas vidare till uppdaterings formulär sidan
-		model.addAttribute("customer", c);
-		return "updateCustomer.html";
+		model.addAttribute("customerU", c);
+		return "updateCustomer";
 	}
 
-	@RequestMapping("/update")
-	public String updateCustomer(@RequestParam String firstName, @RequestParam String surname,
-							  @RequestParam String email, @RequestParam String phone,
-								 @RequestParam long id, Model model) {
-		//Metoden updateById() anropas, där kunden kan hittas, och uppdateras
-		customerService.updateById(id, firstName, surname, email, phone);
-		//Lägga till felmeddelande när kunden inte hittades, eller ändringar inte kunde genomföras
+	@RequestMapping ("/update")
+	public String updateCustomer(@ModelAttribute("customer") @Valid CustomerDto customerDto,
+								 BindingResult result) {
+		if(result.hasErrors()) {
+			return "updateCustomer";
+		}
+		customerService.updateCustomer(customerDto);
 		return "redirect:/customers/all";
 	}
 
-	//se kunder, lägga till kunder, ta bort kunder*/
 }
