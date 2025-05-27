@@ -3,9 +3,11 @@ package com.example.backenend1kundhotell.controllers;
 
 import com.example.backenend1kundhotell.dtos.BookingDto;
 import com.example.backenend1kundhotell.services.BookingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -34,13 +36,26 @@ public class BookingController {
 	}
 
 	@PostMapping ("/add")
-	public String addBooking(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate,
-							 @RequestParam int extraBed, @RequestParam long customerId,
-							 @RequestParam long roomId, Model model){
+	public String addBooking(@Valid BookingDto bookingDto, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("customerId", bookingDto.getMiniCustomer()
+					.getCustomerId());
+			return "addBooking.html";
+		}
+		long roomId=bookingDto.getMiniRoom().getRoomId();
+		LocalDate startDate = bookingDto.getStartDate();
+		LocalDate endDate = bookingDto.getEndDate();
 
-		bookingService.addBooking(startDate, endDate, extraBed, customerId, roomId);
-		return "redirect:/bookings/all";
+		if(!bookingService.isRoomAvailable(roomId, startDate, endDate)){
+			result.rejectValue("startDate", null, "The room is booked during this period");
+			model.addAttribute("customerId", bookingDto.getMiniCustomer().getCustomerId());
+			return "addBooking.html";
+
+		}
+		bookingService.addBooking(bookingDto);
+		return "redirect:bookings/all";
 	}
+
 
 	@RequestMapping("/deleteById/{id}")
 	public String deleteBookingByID(@PathVariable long id) {
