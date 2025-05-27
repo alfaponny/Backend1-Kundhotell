@@ -44,44 +44,38 @@ public class CustomerController {
 	public String addCustomer(@ModelAttribute @Valid CustomerDto customerDto, //BindingResult fångar valideringfel
 							  BindingResult result, //ModelAttribute("customer") skpar ett nyt Customer-objekt
 							  Model model) {
-		//model.addAttribute("customer", new CustomerDto());
 		if(result.hasErrors()) {
 			model.addAttribute("allCustomers", customerService.getAllCustomers());
 			model.addAttribute("title", "Customers");
 			model.addAttribute("name", "Customer details");
 			return "addCustomer";
 		}
-		//Customer customer = convertToEntity(customerDto);
 		customerService.addCustomer(customerDto);
 		return "redirect:/customers/all";
 	}
-	/*private Customer convertToEntity(CustomerDto customerDto) {
-		return new Customer(customerDto.getFirstName(), customerDto.getSurname(),
-				customerDto.getGetEmail(), customerDto.getPhone());
-	}*/
 
 	@RequestMapping("/deleteById/{id}")
-	public String deleteCustomerByID(@PathVariable long id) {
+	public String deleteCustomerByID(@PathVariable long id, Model model) {
 		//I den metoden behöver man kolla om kunden har aktiva bokningar
-		customerService.deleteById(id);
+		String answer = customerService.deleteById(id);
+	//	model
 		return "redirect:/customers/all";
 	}
 
 	@RequestMapping("/updateById/{id}")
-	public String updateCustomerByID(@PathVariable long id, Model model) {
-		Customer c = customerService.findById(id);
+	public String updateCustomerById(@PathVariable long id, Model model) {
+		CustomerDto c = customerService.findById(id);
 		//Kunden som hittas skickas vidare till uppdaterings formulär sidan
-		model.addAttribute("customer", c);
-		return "updateCustomer.html";
+		model.addAttribute("customerU", c);
+		return "updateCustomer";
 	}
 
-	@PostMapping("/update")
+	@RequestMapping ("/update")
 	public String updateCustomer(@ModelAttribute("customer") @Valid CustomerDto customerDto,
 								 BindingResult result) {
 		if(result.hasErrors()) {
 			return "updateCustomer";
 		}
-		//Customer customer = convertToEntity(customerDto);
 		customerService.updateCustomer(customerDto);
 		return "redirect:/customers/all";
 	}

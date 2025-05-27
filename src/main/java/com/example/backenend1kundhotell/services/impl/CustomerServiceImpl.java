@@ -59,13 +59,19 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepo.save(customer);
     }
     @Override
-    public void deleteById(long id){
-        customerRepo.deleteById(id);
+    public String deleteById(long id){
+        Customer customer = customerRepo.findById(id).get();
+        if(customer.getBookings().isEmpty()){
+            customerRepo.deleteById(id);
+            return "Customer deleted";
+        }
+        return "Customer has active bookings";
     }
 
     @Override
-    public Customer findById(long id) {
-        return customerRepo.findById(id).orElse(null);
+    public CustomerDto findById(long id) {
+        Customer customer = customerRepo.findById(id).orElse(null);
+        return customerToCustomerDto(customer);
     }
 
     @Override

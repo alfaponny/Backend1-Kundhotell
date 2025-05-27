@@ -16,9 +16,9 @@ public interface CustomerService {
 
     public List<CustomerDto> getAllCustomers();
 
-    public void deleteById(long id);
+    public String deleteById(long id);
 
-   public Customer findById(long id);
+   public CustomerDto findById(long id);
 
     public void updateById(long id, String firstName, String surname, String email, String phone);
 
