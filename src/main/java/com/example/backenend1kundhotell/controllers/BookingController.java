@@ -2,8 +2,10 @@ package com.example.backenend1kundhotell.controllers;
 
 
 import com.example.backenend1kundhotell.dtos.BookingDto;
+import com.example.backenend1kundhotell.dtos.MiniRoomDto;
 import com.example.backenend1kundhotell.services.BookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,40 @@ public class BookingController {
 	public String addNewBookings(@PathVariable long customerId, Model model) {
 		model.addAttribute("customerId", customerId);
 		return "addBooking.html";
+	}
+
+	@RequestMapping("/addByDate/{customerId}")
+	public String addBookingByDate(@PathVariable long customerId, Model model) {
+		model.addAttribute("customerId", customerId);
+		return "addByDate.html";
+	}
+
+	@GetMapping("/addBooking2/{customerId}/{startDate}/{endDate}/{guests}")
+	public String addBookingPage(
+			@PathVariable long customerId,
+			@PathVariable LocalDate startDate,
+			@PathVariable LocalDate endDate,
+			@PathVariable int guests,
+			Model model
+	) {
+		model.addAttribute("customerId", customerId);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("guests", guests);
+
+		List<MiniRoomDto> availableRooms = bookingService.findAvailableRooms(startDate, endDate, guests);
+		model.addAttribute("allRooms", availableRooms);
+
+		return "addBooking2.html";
+	}
+
+	@PostMapping("/addByDate")
+	public String processAddByDate(@RequestParam LocalDate startDate,
+								   @RequestParam LocalDate endDate,
+								   @RequestParam long customerId,
+								   @RequestParam int guests,
+								   RedirectAttributes redirect) {
+		return "redirect:/bookings/addBooking2/" + customerId + "/" + startDate + "/" + endDate + "/" + guests;
 	}
 
 	@PostMapping ("/add")

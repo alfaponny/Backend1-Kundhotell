@@ -1,9 +1,6 @@
 package com.example.backenend1kundhotell.services;
 
-import com.example.backenend1kundhotell.dtos.BookingDto;
-import com.example.backenend1kundhotell.dtos.CustomerDto;
-import com.example.backenend1kundhotell.dtos.MiniBookingDto;
-import com.example.backenend1kundhotell.dtos.MiniCustomerDto;
+import com.example.backenend1kundhotell.dtos.*;
 import com.example.backenend1kundhotell.models.Booking;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.models.Room;
@@ -34,4 +31,5 @@ public interface BookingService {
 
     public BookingDto getBookingById(long id);
 
+    public List<MiniRoomDto> findAvailableRooms(LocalDate startDate, LocalDate endDate, int guests);
 }

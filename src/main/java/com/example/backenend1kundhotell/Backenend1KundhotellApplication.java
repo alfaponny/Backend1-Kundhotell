@@ -15,13 +15,8 @@ import org.springframework.context.annotation.Bean;
 public class Backenend1KundhotellApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(Backenend1KundhotellApplication.class, args);
-
-
-
 	}
-
 
 	@Bean
 	public CommandLineRunner demo(BookingRepo bookingRepo, CustomerRepo customerRepo,

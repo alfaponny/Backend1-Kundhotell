@@ -4,6 +4,7 @@ import com.example.backenend1kundhotell.dtos.*;
 import com.example.backenend1kundhotell.models.Booking;
 import com.example.backenend1kundhotell.models.Customer;
 import com.example.backenend1kundhotell.models.Room;
+import com.example.backenend1kundhotell.models.RoomType;
 import com.example.backenend1kundhotell.repos.BookingRepo;
 import com.example.backenend1kundhotell.repos.CustomerRepo;
 import com.example.backenend1kundhotell.repos.RoomRepo;
@@ -57,18 +58,6 @@ public class BookingServiceImpl implements BookingService {
                 .map(this::bookingToBookingDto)
                 .collect(Collectors.toList());
     }
-/*
-    @Override
-    public void addBooking(BookingDto bookingDto) {
-        Customer customer = customerRepo.findById(bookingDto.getMiniCustomer().getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Kund hittades inte"));
-        Room room = roomRepo.findById(bookingDto.getMiniRoom().getRoomId())
-                .orElseThrow(() -> new RuntimeException("Rum hittades inte"));
-        Booking booking = bookingDtoToBooking(bookingDto, customer, room);
-        bookingRepo.save(booking);
-    }
-
- */
 
     @Override
     public String addBooking(LocalDate startDate, LocalDate endDate, int extraBed, long customerId, long roomId) {
@@ -86,8 +75,6 @@ public class BookingServiceImpl implements BookingService {
             return "ERROR: The room is booked, choose another one";
             //throw new RuntimeException("Rummet är redan bokat under denna period.");
         }
-        /*Booking booking = bookingDtoToBooking(bookingDto, customer, room);
-        */
         Booking booking = new Booking(startDate, endDate, customer, room, extraBed);
 
         bookingRepo.save(booking);
@@ -125,7 +112,24 @@ public class BookingServiceImpl implements BookingService {
         bookingRepo.save(booking);
     }
 
-
+    @Override
+    public List<MiniRoomDto> findAvailableRooms(LocalDate startDate, LocalDate endDate, int guests) {
+        //int capacity;
+        List<Room> rooms = roomRepo.findAll();
+        return rooms.stream().filter(room -> {
+            int capacity = 0;
+            if(room.getRoomType()== RoomType.SINGLE){
+                capacity = 1;
+            }
+            else if(room.getRoomType()== RoomType.DOUBLE){
+                capacity = 2 + room.getMaxExtraBed();
+            }
+            if(capacity < guests && isRoomAvailable(room, startDate, endDate)){
+                return false;
+            }
+            return true;
+        }).map(room -> new MiniRoomDto(room.getRoomId())).toList();
+    }
 
     // Hjälpmetod för att kolla om ett rum är ledigt under ett intervall
     private boolean isRoomAvailable(Room room, LocalDate startDate, LocalDate endDate) {

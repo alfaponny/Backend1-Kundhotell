@@ -32,6 +32,9 @@
       <td><a th:href="@{/customers/deleteById/{id}(id=${customer.customerId})}">Delete</a></td>
       <td><a th:href="@{/customers/updateById/{id}(id=${customer.customerId})}">Update</a></td>
       <td><a th:href="@{/bookings/addBooking/{customerId}(customerId=${customer.customerId})}">Add booking</a></td>
+      <td><a th:href="@{/bookings/addByDate/{customerId}(customerId=${customer.customerId})}">Add booking by date</a></td>
+
+
 
 
     </tr>

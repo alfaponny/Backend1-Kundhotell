@@ -5,10 +5,22 @@
     <title>Add new booking</title>
 </head>
 <body>
-<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+<table>
+  <thead>
+  <tr>
+    <th th:text="${name}"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="room : ${allRooms}">
+    <td th:text="${room.roomId}"></td>
+  </tr>
+  </tbody>
+</table>
 
 
-<form action="#" th:action="@{/bookings/add}" method="post">
+<!--<form action="#" th:action="@{/bookings/add}" method="post">
   <label for="startDate"> Start date:</label><br>
   <input type="date" id="startDate" name="startDate" required><br><br>
   <label for="endDate"> End date:</label><br>
@@ -19,7 +31,7 @@
   <label for="extraBed"> Extra beds:</label><br>
   <input type="text" id="extraBed" name="extraBed" value=""><br><br>
   <input type="submit" value="Submit"></input>
-</form>
+</form>-->
 
 </body>
 </html>
